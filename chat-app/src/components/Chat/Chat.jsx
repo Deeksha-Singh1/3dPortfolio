@@ -1,12 +1,15 @@
 import React ,{useEffect, useState} from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { BrowserRouter as Router,useSearchParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import InfoBar from '../InfoBar/InfoBar';
+import Input from '../Input/Input';
+import Messages from '../Messages/Messages';
 import './Chat.css';
 
 let socket;
 
 const Chat = ({location}) => {
+
 
   const [name, setName]=useState('');
   const [room, setRoom] = useState('');
@@ -55,12 +58,16 @@ const sendMessage = (event) =>{
 console.log(message, messages);
 
   return (
+    
     <div className='outerContainer'>
       <div className='container'>
           {/* <input type="text" value={message} onChange={(event)=> setMessage(event.target.value)}
           onKeyPress={event => event.key === 'Enter' ? sendMessage(event):null}/> */}
 
           <InfoBar room={room}/>
+          <Messages messages={messages} name={name}/>
+          <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>
+          
       </div>
     </div>
   )
