@@ -1,6 +1,7 @@
-import React ,{useEffect, useState} from 'react'
+import React ,{useEffect, useState} from 'react';
 import { useSearchParams } from 'react-router-dom';
-import io from 'socket.io-client'
+import io from 'socket.io-client';
+import './Chat.css';
 
 let socket;
 
@@ -8,6 +9,8 @@ const Chat = ({location}) => {
 
   const [name, setName]=useState('');
   const [room, setRoom] = useState('');
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
 
   const [searchParams] = useSearchParams();
 
@@ -22,8 +25,7 @@ const Chat = ({location}) => {
     setName(name);
     setRoom(room);
 
-    socket.emit('join',{name,room},({error})=>{
-
+    socket.emit('join',{name,room},()=>{
     });
 
     return ()=>{
@@ -34,8 +36,30 @@ const Chat = ({location}) => {
    
   },[ENDPOINT,searchParams]);
 
+//for handling messages
+useEffect(()=> {
+  socket.on('message',(message)=>{
+    setMessages(messages =>[...messages,message]);
+  });
+},[messages]);
+
+//function for sending messages
+const sendMessage = (event) =>{
+  event.preventDefault();
+  if(message){
+    socket.emit('sendMessage',message, ()=> setMessage(''));
+  }
+}
+
+console.log(message, messages);
+
   return (
-    <div>Chat</div>
+    <div className='outerContainer'>
+      <div className='container'>
+          {/* <input type="text" value={message} onChange={(event)=> setMessage(event.target.value)}
+          onKeyPress={event => event.key === 'Enter' ? sendMessage(event):null}/> */}
+      </div>
+    </div>
   )
 }
 
