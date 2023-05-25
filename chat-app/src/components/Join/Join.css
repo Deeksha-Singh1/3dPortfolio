@@ -18,7 +18,7 @@ html, body {
   text-align: center;
   height: 100vh;
   align-items: center;
-  background-color: #262655;
+  background-color: #480d5f;
 }
 
 .joinInnerContainer {
@@ -42,7 +42,7 @@ html, body {
     color: #fff !important;
     text-transform: uppercase;
     text-decoration: none;
-    background: #2979FF;
+    background: #8e26e9;
     padding: 20px;
     border-radius: 5px;
     display: inline-block;
